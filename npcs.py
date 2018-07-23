@@ -12,12 +12,20 @@ class npc(ndb.Model):
     name = ndb.StringProperty(required=True)
     # hp remaining
     hp = ndb.IntegerProperty(required=True)
-    # determines turn order
+    # maximum hp
+    max_hp = ndb.IntegerProperty(required=True)
+    # determines turn order, and dodge chance
     speed = ndb.IntegerProperty(require=True)
-    # determines chance to hit
+    # determines damage reduction, out of 100
     armor = ndb.IntegerProperty(require=True)
-    # determines damage
+    # determines base damage
     strength = ndb.IntegerProperty(required=True)
+    # determines base damage ### elaborate you loser ###
+    weapon = ndb.KeyProperty(required=True)
+    # determines damage calculation
+    dexterity = ndb.IntegerProperty(required=True)
+    # determines chance to hit
+    intel = ndb.IntegerProperty(required=True)
 
 # This is the player class, used by all users
 # of the game. It contains variables used
