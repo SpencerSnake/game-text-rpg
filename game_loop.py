@@ -24,16 +24,7 @@ class Combat(object):
         else:
             print("You missed")
     def combat_loop(self):
-        while(player.hp > '0' #wait wut):
-
-
-
-
-                #player goes first
                 #how would we do this part? how do we declare that this person goes first?
-            playerChoice = jinja.FileSystemLoader(/noWhereYet):
-                if(player.speed > Enemy.speed): #speed rating decides if either the player or enemy goees first
-                    faster = player
                     slower = enemy
                 else:
                     faster = enemy
