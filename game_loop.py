@@ -21,20 +21,20 @@ class Combat(object):
             dmg = (((player1.strength + player1.weapon) / (10 - (player1.dex / 3)))/ 1 + (player2.armor / 100))#i dnt knw how to brk it dwn
         return int(dmg)
 
-        else:
-            print("You missed")
     def combat_loop(self):
+        while(player.hp > 0 and enemy.hp > 0):
                 #how would we do this part? how do we declare that this person goes first?
+            playerChoice = 'fight' #jinja.FileSystemLoader(/noWhereYet)
+                if(player.speed > Enemy.speed): #speed rating decides if either the player or enemy goees first
+                    faster = player
                     slower = enemy
                 else:
                     faster = enemy
                     slower = player
 
-
-
             print("Select an option!")
 
-            if player.Choice = fight:
+            if player.Choice == 'fight':
                 if faster == player:
                     dmg = damage(player, enemy)
                     enemy.hp -= dmg
@@ -44,12 +44,10 @@ class Combat(object):
                 else:
                     dmg = damage(enemy, player)
                     player.hp -= dmg
-                    if player hp > 0:
+                    if player.hp > 0:
                         dmg = damage(player, enemy)
                         enemy.hp -= dmg
-                    else:
-                        print("You have missed")
-                    if enemy.hp <= 0:
-                        print("Enemy is Dead")
-                    elif player.hp <= 0:
-                        print("GAME OVER")
+            if enemy.hp <= 0:
+                print("Enemy is Dead")
+            elif player.hp <= 0:
+                print("GAME OVER")
