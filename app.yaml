@@ -4,25 +4,6 @@ api_version: 1
 threadsafe: yes
 
 handlers:
-# - url: /favicon\.ico
-#   static_files: favicon.ico
-#   upload: favicon\.ico
-#
-# - url: /app-stylesheets
-#   static_dir: app-stylesheets
-#
-# - url: /my-images
-#   static_dir: my-images
-#
-# -url: /static
-#   static_dir: static
-# #new handlers should go ABOSSVE the catch all url (.*)
-#
-# - url: /
-#   static_files: help.html
-#   upload: help.html
-#
-#
 
 - url: /.*
   script: main.app
