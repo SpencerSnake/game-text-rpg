@@ -4,6 +4,8 @@
 
 from google.appengine.ext import ndb
 
+
+
 # This is the base npc class containing all
 # the statistics required for combat. It's
 # used by both players and enemies.
@@ -27,6 +29,8 @@ class npc(ndb.Model):
     # determines chance to hit
     intel = ndb.IntegerProperty(required=True)
 
+
+
 # This is the player class, used by all users
 # of the game. It contains variables used
 # exclusively in the player encounters.
@@ -38,6 +42,8 @@ class player(npc):
     # player inventory. Stored as string list
     # and parsed.
     inventory = ndb.StringProperty(repeated=True)
+
+
 
 # This is the monster class, used by all
 # all enemies in the game. It contains data
