@@ -4,7 +4,9 @@
 
 from google.appengine.ext import ndb
 
-
+### TO DO ###
+# - integrate speed based on strength and weight
+# - create debugger tool to add these items
 
 # This is the base npc class containing all
 # the statistics required for combat. It's
@@ -17,17 +19,44 @@ class npc(ndb.Model):
     # maximum hp
     max_hp = ndb.IntegerProperty(required=True)
     # determines turn order, and dodge chance
-    speed = ndb.IntegerProperty(require=True)
-    # determines damage reduction, out of 100
-    armor = ndb.IntegerProperty(require=True)
+    speed = ndb.IntegerProperty(required=True)
+    # Equipment - determines damage reduction, out of 100
+    armor = ndb.KeyProperty(required=True)
+    # Equipment - determines base damage
+    weapon = ndb.KeyProperty(required=True)
     # determines base damage
     strength = ndb.IntegerProperty(required=True)
-    # determines base damage ### elaborate you loser ###
-    weapon = ndb.KeyProperty(required=True)
     # determines damage calculation
     dexterity = ndb.IntegerProperty(required=True)
     # determines chance to hit
     intel = ndb.IntegerProperty(required=True)
+
+
+
+# This is the weapon class. It is used by all npcs
+# to determine damage values. Certain monsters, and
+# all players can use several different weapons.
+class weapon(ndb.Model):
+    # name displayed on the webpage
+    name = ndb.StringProperty(required=True)
+    # determines base damage
+    power = ndb.IntegerProperty(required=True)
+    # determines speed of wielder
+    weight = ndb.IntegerProperty(required=True)
+
+
+
+# This is the armor class. It is used by all npcs
+# to determine damage reduction. Certain monsters,
+# and all players can use several different types
+# of armor.
+class armor(ndb.Model):
+    # name displayed on webpage
+    name = ndb.StringProperty(required=True)
+    # determines damage reduction, out of 100
+    resistance = ndb.IntegerProperty(required=True)
+    # determines speed of wielder
+    weight = ndb.IntegerProperty(required=True)
 
 
 
@@ -50,4 +79,4 @@ class player(npc):
 # used behind the scenes to determine various
 # results.
 class monster(npc):
-    pass ### add variables in phase 2
+    pass ### add data in phase 2
