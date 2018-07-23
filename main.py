@@ -2,6 +2,8 @@
 # redesigned-computing-machine
 # An open source game engine for online rpgs using the appEngine platform.
 
+from google.appengine.ext import ndb
+
 import os
 import jinja2
 import random
