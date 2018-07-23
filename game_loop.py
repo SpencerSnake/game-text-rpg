@@ -17,22 +17,34 @@ class Combat(object):
         dodge = random.randInt(1,20) + int(player2.speed/7.5) #player 2 is the one BEING hit
 
         if hit >= dodge:
-            dmg = (((strength + weapon) / (10 - (dex / 3)))/ 1 + (armor / 100))#i dnt knw how to brk it dwn
+            dmg = (((player1.strength + player1.weapon) / (10 - (player1.dex / 3)))/ 1 + (player2.armor / 100))#i dnt knw how to brk it dwn
         else:
             print("You missed")
     def combat_loop(self):
         while(player.hp > '0' #wait wut):
 
-                if(player.speed > Enemy.speed): #speed rating decides if either the player or enemy goees first
-                faster = player
-                slower = enemy
-            else:
-                faster = enemy
-                slower = player
 
-            if faster = player:
+
+                #player goes first
                 #how would we do this part? how do we declare that this person goes first?
-        playerChoice = jinja.FileSystemLoader(#where ever its at)
+        playerChoice = jinja.FileSystemLoader(#where ever its at):
+
+                if(player.speed > Enemy.speed): #speed rating decides if either the player or enemy goees first
+                    faster = player
+                    slower = enemy
+                else:
+                    faster = enemy
+                    slower = player
+
+                    if faster == player:
+                        damage(player, enemy)
+                        if enemy hp > 0:
+                            damage(enemy, player)
+                    else:
+                        damage(enemy, player)
+                        if player hp > 0:
+                            damage(player, enemy)
+
             print("Select an option!")
 
             if player.Choice = fight:
