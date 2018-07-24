@@ -63,11 +63,20 @@ class DebugWeaponHandler(webapp2.RequestHandler):
         )
         self.response.write(html)
 
+class GameHandler(webapp2.RequestHandler):
+    def get(self):
+        game_template = jinja_env.get_template('templates/game.html')
+        html = game_template.render(
+
+        )
+        self.response.write(html)
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/debug', DebugHandler),
     ('/debug/monster', DebugMonsterHandler),
     ('/debug/player', DebugPlayerHandler),
     ('/debug/armor', DebugArmorHandler),
-    ('/debug/weapon', DebugWeaponHandler)
+    ('/debug/weapon', DebugWeaponHandler),
+    ('/game', GameHandler)
 ], debug=True)
