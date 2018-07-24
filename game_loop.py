@@ -27,7 +27,6 @@ class Combat(object):
     def combat_loop(self):
         while(player.hp > 0 and enemy.hp > 0):
             playerChoice = 'fight' #jinja.FileSystemLoader(/noWhereYet)
-                if(player.speed > Enemy.speed): #speed rating decides if either the player or enemy goees first
                     faster = player
                     slower = enemy
                 else:
@@ -43,12 +42,14 @@ class Combat(object):
                     if enemy.hp > 0:
                         dmg = damage(enemy, player)
                         player.hp -= dmg
+                    return int(dmg)
                 else:
                     dmg = damage(enemy, player)
                     player.hp -= dmg
                     if player.hp > 0:
                         dmg = damage(player, enemy)
                         enemy.hp -= dmg
+                    return int(dmg)
             if enemy.hp <= 0:
                 print("Enemy is Dead")
             elif player.hp <= 0:

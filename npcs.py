@@ -24,7 +24,7 @@ class npc(ndb.Model):
     # maximum hp
     max_hp = ndb.IntegerProperty(required=True)
     # determines turn order, and dodge chance
-    speed = ndb.IntegerProperty(required=False)
+    speed = ndb.IntegerProperty(required=True)
     # Equipment - determines damage reduction, out of 100
     armor = ndb.KeyProperty(required=True)
     # Equipment - determines base damage
@@ -35,10 +35,6 @@ class npc(ndb.Model):
     dexterity = ndb.IntegerProperty(required=True)
     # determines chance to hit
     intel = ndb.IntegerProperty(required=True)
-    # formula for speed
-    speed = int(((strength*10)/ # Maximum carry weight
-        (armor.weight+weapon.weight))+ # Divided by current carry weight
-        (dexterity*1.2)) # Plus a bonus from dexterity
 
 
 
