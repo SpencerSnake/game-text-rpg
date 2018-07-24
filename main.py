@@ -25,6 +25,9 @@ class MainHandler(webapp2.RequestHandler):
         )
         self.response.write(html)
 
+enemies = npcs.enemies.query():
+
+
 class DebugHandler(webapp2.RequestHandler):
     def get(self):
         debug_template = jinja_env.get_template('templates/debug.html')
@@ -58,7 +61,6 @@ class DebugPlayerHandler(webapp2.RequestHandler):
         player.name = self.request.get('name')
         player.hp = int(self.request.get('hp'))
         player.max_hp = int(self.request.get('max_hp'))
-        player.strength = int(self.request.get('stength'))
         player.strength = int(self.request.get('strength'))
         player.dexterity = int(self.request.get('dexterity'))
         player.intel = int(self.request.get('intel'))
