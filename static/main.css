@@ -20,10 +20,12 @@ h1 {
   font-size: 18px;
   background-color: lightgrey;
   width: 300px;
-  border: 25px solid green;
+  border: 25px solid darkgreen;
   padding: 25px;
   margin: 25px;
   opacity: .5;
+  /* cursor: pointer;
+  display: inline-block; */
 
 }
 .background_img {
