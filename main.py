@@ -71,6 +71,30 @@ class GameHandler(webapp2.RequestHandler):
         )
         self.response.write(html)
 
+class GameLoadHandler(webapp2.RequestHandler):
+    def get(self):
+        gameLoad_template = jinja_env.get_template('templates/game.html')
+        html = game_template.render(
+
+        )
+        self.response.write(html)
+
+class GameStoryHandler(webapp2.RequestHandler):
+    def get(self):
+        gameStory_template = jinja_env.get_template('templates/game.html')
+        html = game_template.render(
+
+        )
+        self.response.write(html)
+
+class GameArcadeHandler(webapp2.RequestHandler):
+    def get(self):
+        gameArcade_template = jinja_env.get_template('templates/game.html')
+        html = game_template.render(
+
+        )
+        self.response.write(html)
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/debug', DebugHandler),
@@ -78,5 +102,8 @@ app = webapp2.WSGIApplication([
     ('/debug/player', DebugPlayerHandler),
     ('/debug/armor', DebugArmorHandler),
     ('/debug/weapon', DebugWeaponHandler),
-    ('/game', GameHandler)
+    ('/game', GameHandler),
+    ('/game/load', GameLoadHandler)
+    ('/game/story', GameStoryHandler),
+    ('/game/arcade', GameArcadeHandler),
 ], debug=True)
