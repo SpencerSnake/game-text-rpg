@@ -4,7 +4,7 @@
 
 from google.appengine.ext import ndb
 
-=======
+
 import webapp2
 
 ### TO DO ###
@@ -24,7 +24,6 @@ class npc(ndb.Model):
     # maximum hp
     max_hp = ndb.IntegerProperty(required=True)
     # determines turn order, and dodge chance
-=======
     speed = ndb.IntegerProperty(required=False)
     # Equipment - determines damage reduction, out of 100
     armor = ndb.KeyProperty(required=True)
@@ -37,7 +36,6 @@ class npc(ndb.Model):
     # determines chance to hit
     intel = ndb.IntegerProperty(required=True)
 
-=======
     def __init__(self):
         self.speed = int(((self.strength*10)/ # Maximum carry weight
             (self.armor.weight+self.weapon.weight))+ # Divided by current carry weight
