@@ -4,8 +4,12 @@
 
 from google.appengine.ext import ndb
 
-import npcs
+import webapp2
+import jinja2
+import os
 import random
+
+import npcs
 
 class Combat(object):
     def __init__(self, thing1, thing2):#it does matter but it doesn't
@@ -15,45 +19,39 @@ class Combat(object):
     def damage(self, player1, player2):
         hit = random.randInt(1,20) + int(player1.intel/7.5)
         dodge = random.randInt(1,20) + int(player2.speed/7.5) #player 2 is the one BEING hit
+        dmg = 0
 
         if hit >= dodge:
-            dmg = (((strength + weapon) / (10 - (dex / 3)))/ 1 + (armor / 100))#i dnt knw how to brk it dwn
-        else:
-            print("You missed")
+            dmg = (((player1.strength + player1.weapon) / (10 - (player1.dex / 3)))/ 1 + (player2.armor / 100))#i dnt knw how to brk it dwn
+        return int(dmg)
+
     def combat_loop(self):
-        while(player.hp > '0' #wait wut):
-
-                if(player.speed > Enemy.speed): #speed rating decides if either the player or enemy goees first
-                faster = player
-                slower = enemy
-            else:
-                faster = enemy
-                slower = player
-
-            if faster = player:
+        while(player.hp > 0 and enemy.hp > 0):
                 #how would we do this part? how do we declare that this person goes first?
-        playerChoice = jinja.FileSystemLoader(#where ever its at)
+            playerChoice = 'fight' #jinja.FileSystemLoader(/noWhereYet)
+                if(player.speed > Enemy.speed): #speed rating decides if either the player or enemy goees first
+                    faster = player
+                    slower = enemy
+                else:
+                    faster = enemy
+                    slower = player
+
             print("Select an option!")
 
-            if player.Choice = fight:
-                if hit >= dodge:
-                    dmg
-                    if hit = True:
-                        print("You have hit " + enemy)
-                    #how can we determine how much damage was done?
-                        enemy.hp = hp - dmg
-                    else:
-                        print("You have missed")
-                        if enemy.hp <= '0':
-                            print("Dead")
-                        else:
-                            enemy.Hit()
-                        #chance to hit
-                        if hit = True:
-                            print("The " + enemy + " has hit you")
-                            #how to determine damage
-                            player.hp = hp - dmg
-                        else:
-                            print("Enemy has missed")
-                            if player.hp <= '0':
-                                print("GAME OVER")]]
+            if player.Choice == 'fight':
+                if faster == player:
+                    dmg = damage(player, enemy)
+                    enemy.hp -= dmg
+                    if enemy.hp > 0:
+                        dmg = damage(enemy, player)
+                        player.hp -= dmg
+                else:
+                    dmg = damage(enemy, player)
+                    player.hp -= dmg
+                    if player.hp > 0:
+                        dmg = damage(player, enemy)
+                        enemy.hp -= dmg
+            if enemy.hp <= 0:
+                print("Enemy is Dead")
+            elif player.hp <= 0:
+                print("GAME OVER")
