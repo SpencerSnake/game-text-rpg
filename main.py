@@ -48,7 +48,7 @@ class DebugMonsterHandler(webapp2.RequestHandler):
                 npcs.armor.name == self.request.get('armor')),
         )
         monster.put()
-=======
+
         monster = npcs.Monster()
         monster.name = self.request.get('name')
         monster.hp = self.request.get('hp')
@@ -60,7 +60,7 @@ class DebugMonsterHandler(webapp2.RequestHandler):
             npcs.weapon.name == self.request.get('weapon'))
         monster.armor = npcs.armor.query().filer(
             npcs.armor.name == self.request.get('armor'))
->>>>>>> 3634377fd7fffa40f7210c39c2ce57cac9a31539
+
         debug_template = jinja_env.get_template('templates/debug_monster.html')
         html = debug_template.render(
 
@@ -69,7 +69,7 @@ class DebugMonsterHandler(webapp2.RequestHandler):
 
 class DebugPlayerHandler(webapp2.RequestHandler):
     def get(self):
-<<<<<<< HEAD
+
         player = npcs.player(
             name = self.request.get('name'),
             hp = int(self.request.get('hp')),
@@ -86,7 +86,7 @@ class DebugPlayerHandler(webapp2.RequestHandler):
             inventroy = self.request.get('inventory'),
         )
         player.put()
-=======
+
         player = npcs.player()
         player.name = self.request.get('name')
         player.hp = int(self.request.get('hp'))
@@ -98,7 +98,7 @@ class DebugPlayerHandler(webapp2.RequestHandler):
             npcs.weapon.name == self.request.get('weapon'))
         player.armor = npcs.armor.query().filer(
             npcs.armor.name == self.request.get('armor'))
->>>>>>> 3634377fd7fffa40f7210c39c2ce57cac9a31539
+
         debug_template = jinja_env.get_template('templates/debug_player.html')
         html = debug_template.render(
 
