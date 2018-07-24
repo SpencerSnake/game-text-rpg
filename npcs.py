@@ -35,11 +35,10 @@ class npc(ndb.Model):
     dexterity = ndb.IntegerProperty(required=True)
     # determines chance to hit
     intel = ndb.IntegerProperty(required=True)
-
-    def __init__(self):
-        self.speed = int(((self.strength*10)/ # Maximum carry weight
-            (self.armor.weight+self.weapon.weight))+ # Divided by current carry weight
-            (self.dexterity*1.2)) # Plus a bonus from dexterity
+    # formula for speed
+    speed = int(((strength*10)/ # Maximum carry weight
+        (armor.weight+weapon.weight))+ # Divided by current carry weight
+        (dexterity*1.2)) # Plus a bonus from dexterity
 
 
 
