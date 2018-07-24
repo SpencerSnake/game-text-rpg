@@ -54,7 +54,6 @@ class DebugMonsterHandler(webapp2.RequestHandler):
                 (int(self.request.get('dexterity'))*1.2)))
         )
         monster.put()
-<<<<<<< HEAD
 
         monster = npcs.Monster()
         monster.name = self.request.get('name')
