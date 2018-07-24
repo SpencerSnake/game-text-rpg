@@ -59,6 +59,7 @@ class DebugPlayerHandler(webapp2.RequestHandler):
         player.hp = int(self.request.get('hp'))
         player.max_hp = int(self.request.get('max_hp'))
         player.strength = int(self.request.get('stength'))
+        player.strength = int(self.request.get('strength'))
         player.dexterity = int(self.request.get('dexterity'))
         player.intel = int(self.request.get('intel'))
         player.weapon = npcs.weapon.query().filer(
