@@ -4,8 +4,12 @@
 
 from google.appengine.ext import ndb
 
-import npcs
+import webapp2
+import jinja2
+import os
 import random
+
+import npcs
 
 class Combat(object):
     def __init__(self, thing1, thing2):#it does matter but it doesn't
