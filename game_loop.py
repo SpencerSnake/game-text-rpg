@@ -8,7 +8,7 @@ import npcs
 import random
 import jinja2
 
-class Combat(object):
+class Combat(ndbModel.object):
     def __init__(self, thing1, thing2):#it does matter but it doesn't
         player = thing1                #it really does
         enemy = thing2
@@ -53,3 +53,4 @@ class Combat(object):
                 print("Enemy is Dead")
             elif player.hp <= 0:
                 print("GAME OVER")
+#call to datastore
