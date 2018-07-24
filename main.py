@@ -23,6 +23,51 @@ class MainHandler(webapp2.RequestHandler):
         )
         self.response.write(html)
 
+class DebugHandler(webapp2.RequestHandler):
+    def get(self):
+        debug_template = jinja_env.get_template('templates/debug.html')
+        html = debug_template.render(
+
+        )
+        self.response.write(html)
+
+class DebugMonsterHandler(webapp2.RequestHandler):
+    def get(self):
+        debug_template = jinja_env.get_template('templates/debug.html')
+        html = debug_template.render(
+
+        )
+        self.response.write(html)
+
+class DebugPlayerHandler(webapp2.RequestHandler):
+    def get(self):
+        debug_template = jinja_env.get_template('templates/debug.html')
+        html = debug_template.render(
+
+        )
+        self.response.write(html)
+
+class DebugArmorHandler(webapp2.RequestHandler):
+    def get(self):
+        debug_template = jinja_env.get_template('templates/debug.html')
+        html = debug_template.render(
+
+        )
+        self.response.write(html)
+
+class DebugWeaponHandler(webapp2.RequestHandler):
+    def get(self):
+        debug_template = jinja_env.get_template('templates/debug.html')
+        html = debug_template.render(
+
+        )
+        self.response.write(html)
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
+    ('/debug', DebugHandler),
+    ('/debug/monster', DebugMonsterHandler),
+    ('/debug/player', DebugPlayerHandler),
+    ('/debug/armor', DebugArmorHandler),
+    ('/debug/weapon', DebugWeaponHandler)
 ], debug=True)
