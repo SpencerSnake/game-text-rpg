@@ -4,16 +4,13 @@
 
 from google.appengine.ext import ndb
 
-import webapp2
-import jinja2
-import os
-import random
-
 import npcs
+import random
+import jinja2
 
 class Combat(object):
     def __init__(self, thing1, thing2):#it does matter but it doesn't
-        player = thing1
+        player = thing1                #it really does
         enemy = thing2
 
     def damage(self, player1, player2):
@@ -22,12 +19,13 @@ class Combat(object):
         dmg = 0
 
         if hit >= dodge:
-            dmg = (((player1.strength + player1.weapon) / (10 - (player1.dex / 3)))/ 1 + (player2.armor / 100))#i dnt knw how to brk it dwn
+            dmg = (((player1.strength + player1.weapon) /
+            (10 - (player1.dex / 3)))/
+            1 + (player2.armor / 100))
         return int(dmg)
 
     def combat_loop(self):
         while(player.hp > 0 and enemy.hp > 0):
-                #how would we do this part? how do we declare that this person goes first?
             playerChoice = 'fight' #jinja.FileSystemLoader(/noWhereYet)
                 if(player.speed > Enemy.speed): #speed rating decides if either the player or enemy goees first
                     faster = player
