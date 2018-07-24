@@ -8,7 +8,7 @@ import npcs
 import random
 import jinja2
 
-class Combat(ndbModel.object):
+class Combat(object):
     def __init__(self, thing1, thing2):#it does matter but it doesn't
         player = thing1                #it really does
         enemy = thing2

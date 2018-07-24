@@ -39,7 +39,7 @@ class DebugMonsterHandler(webapp2.RequestHandler):
         monster.name = self.request.get('name')
         monster.hp = self.request.get('hp')
         monster.max_hp = self.request.get('max_hp')
-        monster.strength = self.request.get('stength')
+        monster.strength = self.request.get('strength')
         monster.dexterity = self.request.get('dexterity')
         monster.intel = self.request.get('intel')
         monster.weapon = npcs.weapon.query().filer(
@@ -63,8 +63,8 @@ class DebugPlayerHandler(webapp2.RequestHandler):
         player.intel = int(self.request.get('intel'))
         player.weapon = npcs.weapon.query().filer(
             npcs.weapon.name == self.request.get('weapon'))
-        player.armor = npcs.weapon.query().filer(
-            npcs.weapon.name == self.request.get('armor'))
+        player.armor = npcs.armor.query().filer(
+            npcs.armor.name == self.request.get('armor'))
         debug_template = jinja_env.get_template('templates/debug_player.html')
         html = debug_template.render(
 
