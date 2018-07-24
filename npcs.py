@@ -4,7 +4,6 @@
 
 from google.appengine.ext import ndb
 
-<<<<<<< HEAD
 =======
 import webapp2
 
@@ -12,7 +11,6 @@ import webapp2
 # - integrate speed based on strength and weight
 # - create debugger tool to add these items
 
->>>>>>> a0b1447c741262a5c926d9c97b86d850b3b7d133
 # This is the base npc class containing all
 # the statistics required for combat. It's
 # used by both players and enemies.
@@ -24,7 +22,6 @@ class npc(ndb.Model):
     # maximum hp
     max_hp = ndb.IntegerProperty(required=True)
     # determines turn order, and dodge chance
-<<<<<<< HEAD
     speed = ndb.IntegerProperty(required=True)
     # determines damage reduction, out of 100
     armor = ndb.IntegerProperty(required=True)
@@ -34,7 +31,6 @@ class npc(ndb.Model):
     armor = ndb.KeyProperty(required=True)
     # Equipment - determines base damage
     weapon = ndb.KeyProperty(required=True)
->>>>>>> a0b1447c741262a5c926d9c97b86d850b3b7d133
     # determines base damage
     strength = ndb.IntegerProperty(required=True)
     # determines damage calculation
@@ -42,7 +38,6 @@ class npc(ndb.Model):
     # determines chance to hit
     intel = ndb.IntegerProperty(required=True)
 
-<<<<<<< HEAD
 =======
     def __init__(self):
         self.speed = int(((self.strength*10)/ # Maximum carry weight
@@ -79,7 +74,6 @@ class armor(ndb.Model):
 
 
 
->>>>>>> a0b1447c741262a5c926d9c97b86d850b3b7d133
 # This is the player class, used by all users
 # of the game. It contains variables used
 # exclusively in the player encounters.
