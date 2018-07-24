@@ -4,6 +4,8 @@
 
 from google.appengine.ext import ndb
 
+import npcs
+
 import os
 import jinja2
 import random
@@ -33,7 +35,18 @@ class DebugHandler(webapp2.RequestHandler):
 
 class DebugMonsterHandler(webapp2.RequestHandler):
     def get(self):
-        debug_template = jinja_env.get_template('templates/debug.html')
+        monster = npcs.Monster()
+        monster.name = self.request.get('name')
+        monster.hp = self.request.get('hp')
+        monster.max_hp = self.request.get('max_hp')
+        monster.strength = self.request.get('strength')
+        monster.dexterity = self.request.get('dexterity')
+        monster.intel = self.request.get('intel')
+        monster.weapon = npcs.weapon.query().filer(
+            npcs.weapon.name == self.request.get('weapon'))
+        monster.armor = npcs.armor.query().filer(
+            npcs.armor.name == self.request.get('armor'))
+        debug_template = jinja_env.get_template('templates/debug_monster.html')
         html = debug_template.render(
 
         )
@@ -41,7 +54,18 @@ class DebugMonsterHandler(webapp2.RequestHandler):
 
 class DebugPlayerHandler(webapp2.RequestHandler):
     def get(self):
-        debug_template = jinja_env.get_template('templates/debug.html')
+        player = npcs.player()
+        player.name = self.request.get('name')
+        player.hp = int(self.request.get('hp'))
+        player.max_hp = int(self.request.get('max_hp'))
+        player.strength = int(self.request.get('stength'))
+        player.dexterity = int(self.request.get('dexterity'))
+        player.intel = int(self.request.get('intel'))
+        player.weapon = npcs.weapon.query().filer(
+            npcs.weapon.name == self.request.get('weapon'))
+        player.armor = npcs.armor.query().filer(
+            npcs.armor.name == self.request.get('armor'))
+        debug_template = jinja_env.get_template('templates/debug_player.html')
         html = debug_template.render(
 
         )
@@ -49,7 +73,11 @@ class DebugPlayerHandler(webapp2.RequestHandler):
 
 class DebugArmorHandler(webapp2.RequestHandler):
     def get(self):
-        debug_template = jinja_env.get_template('templates/debug.html')
+        armor = npcs.armor()
+        armor.name = self.request.get('name')
+        armor.resistance = int(self.request.get('resistance'))
+        armor.weight = int(self.request.get('weight'))
+        debug_template = jinja_env.get_template('templates/debug_armor.html')
         html = debug_template.render(
 
         )
@@ -57,8 +85,44 @@ class DebugArmorHandler(webapp2.RequestHandler):
 
 class DebugWeaponHandler(webapp2.RequestHandler):
     def get(self):
-        debug_template = jinja_env.get_template('templates/debug.html')
+        weapon = npcs.weapon()
+        weapon.name = self.request.get('name')
+        weapon.power = int(self.request.get('power'))
+        weapon.weight = int(self.request.get('weight'))
+        debug_template = jinja_env.get_template('templates/debug_weapon.html')
         html = debug_template.render(
+
+        )
+        self.response.write(html)
+
+class GameHandler(webapp2.RequestHandler):
+    def get(self):
+        game_template = jinja_env.get_template('templates/game.html')
+        html = game_template.render(
+
+        )
+        self.response.write(html)
+
+class GameLoadHandler(webapp2.RequestHandler):
+    def get(self):
+        game_template = jinja_env.get_template('templates/game.html')
+        html = game_template.render(
+
+        )
+        self.response.write(html)
+
+class GameStoryHandler(webapp2.RequestHandler):
+    def get(self):
+        game_template = jinja_env.get_template('templates/game.html')
+        html = game_template.render(
+
+        )
+        self.response.write(html)
+
+class GameArcadeHandler(webapp2.RequestHandler):
+    def get(self):
+        game_template = jinja_env.get_template('templates/game.html')
+        html = game_template.render(
 
         )
         self.response.write(html)
@@ -69,5 +133,9 @@ app = webapp2.WSGIApplication([
     ('/debug/monster', DebugMonsterHandler),
     ('/debug/player', DebugPlayerHandler),
     ('/debug/armor', DebugArmorHandler),
-    ('/debug/weapon', DebugWeaponHandler)
+    ('/debug/weapon', DebugWeaponHandler),
+    ('/game', GameHandler),
+    ('/game/load', GameLoadHandler),
+    ('/game/story', GameStoryHandler),
+    ('/game/arcade', GameArcadeHandler),
 ], debug=True)
