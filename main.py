@@ -44,8 +44,8 @@ class DebugMonsterHandler(webapp2.RequestHandler):
         monster.intel = self.request.get('intel')
         monster.weapon = npcs.weapon.query().filer(
             npcs.weapon.name == self.request.get('weapon'))
-        monster.armor = npcs.weapon.query().filer(
-            npcs.weapon.name == self.request.get('armor'))
+        monster.armor = npcs.armor.query().filer(
+            npcs.armor.name == self.request.get('armor'))
         debug_template = jinja_env.get_template('templates/debug_monster.html')
         html = debug_template.render(
 
