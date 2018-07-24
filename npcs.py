@@ -4,6 +4,8 @@
 
 from google.appengine.ext import ndb
 
+import webapp2
+
 ### TO DO ###
 # - integrate speed based on strength and weight
 # - create debugger tool to add these items
@@ -19,7 +21,7 @@ class npc(ndb.Model):
     # maximum hp
     max_hp = ndb.IntegerProperty(required=True)
     # determines turn order, and dodge chance
-    speed = ndb.IntegerProperty(required=True)
+    speed = ndb.IntegerProperty(required=False)
     # Equipment - determines damage reduction, out of 100
     armor = ndb.KeyProperty(required=True)
     # Equipment - determines base damage
@@ -30,6 +32,12 @@ class npc(ndb.Model):
     dexterity = ndb.IntegerProperty(required=True)
     # determines chance to hit
     intel = ndb.IntegerProperty(required=True)
+
+    def __init__(self):
+        self.speed = int(((self.strength*10)/ # Maximum carry weight
+            (self.armor.weight+self.weapon.weight))+ # Divided by current carry weight
+            (self.dexterity*1.2)) # Plus a bonus from dexterity
+
 
 
 
