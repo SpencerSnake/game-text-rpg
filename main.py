@@ -5,13 +5,12 @@
 from google.appengine.ext import ndb
 
 import npcs
+#import game_loop
 
 import os
 import jinja2
 import random
 import webapp2
-
-#import game-loop
 
 jinja_env = jinja2.Environment(
     loader = jinja2.FileSystemLoader(os.path.dirname(__file__))
@@ -35,6 +34,21 @@ class DebugHandler(webapp2.RequestHandler):
 
 class DebugMonsterHandler(webapp2.RequestHandler):
     def get(self):
+<<<<<<< HEAD
+        monster = npcs.monster(
+            name = self.request.get('name'),
+            hp = int(self.request.get('hp')),
+            max_hp = int(self.request.get('max_hp')),
+            strength = int(self.request.get('strength')),
+            dexterity = int(self.request.get('dexterity')),
+            intel = int(self.request.get('intel')),
+            weapon = npcs.weapon.query().filter(
+                npcs.weapon.name == self.request.get('weapon')),
+            armor = npcs.armor.query().filter(
+                npcs.armor.name == self.request.get('armor')),
+        )
+        monster.put()
+=======
         monster = npcs.Monster()
         monster.name = self.request.get('name')
         monster.hp = self.request.get('hp')
@@ -46,6 +60,7 @@ class DebugMonsterHandler(webapp2.RequestHandler):
             npcs.weapon.name == self.request.get('weapon'))
         monster.armor = npcs.armor.query().filer(
             npcs.armor.name == self.request.get('armor'))
+>>>>>>> 3634377fd7fffa40f7210c39c2ce57cac9a31539
         debug_template = jinja_env.get_template('templates/debug_monster.html')
         html = debug_template.render(
 
@@ -54,6 +69,24 @@ class DebugMonsterHandler(webapp2.RequestHandler):
 
 class DebugPlayerHandler(webapp2.RequestHandler):
     def get(self):
+<<<<<<< HEAD
+        player = npcs.player(
+            name = self.request.get('name'),
+            hp = int(self.request.get('hp')),
+            max_hp = int(self.request.get('max_hp')),
+            strength = int(self.request.get('stength')),
+            dexterity = int(self.request.get('dexterity')),
+            intel = int(self.request.get('intel')),
+            weapon = npcs.weapon.query().filter(
+                npcs.weapon.name == self.request.get('weapon')),
+            armor = npcs.armor.query().filter(
+                npcs.armor.name == self.request.get('armor')),
+            xp = int(self.request.get('xp')),
+            gold = int(self.request.get('gold')),
+            inventroy = self.request.get('inventory'),
+        )
+        player.put()
+=======
         player = npcs.player()
         player.name = self.request.get('name')
         player.hp = int(self.request.get('hp'))
@@ -65,6 +98,7 @@ class DebugPlayerHandler(webapp2.RequestHandler):
             npcs.weapon.name == self.request.get('weapon'))
         player.armor = npcs.armor.query().filer(
             npcs.armor.name == self.request.get('armor'))
+>>>>>>> 3634377fd7fffa40f7210c39c2ce57cac9a31539
         debug_template = jinja_env.get_template('templates/debug_player.html')
         html = debug_template.render(
 
@@ -73,10 +107,12 @@ class DebugPlayerHandler(webapp2.RequestHandler):
 
 class DebugArmorHandler(webapp2.RequestHandler):
     def get(self):
-        armor = npcs.armor()
-        armor.name = self.request.get('name')
-        armor.resistance = int(self.request.get('resistance'))
-        armor.weight = int(self.request.get('weight'))
+        armor = npcs.armor(
+            name = self.request.get('name'),
+            resistance = int(self.request.get('resistance')),
+            weight = int(self.request.get('weight')),
+        )
+        armor.put()
         debug_template = jinja_env.get_template('templates/debug_armor.html')
         html = debug_template.render(
 
@@ -85,10 +121,12 @@ class DebugArmorHandler(webapp2.RequestHandler):
 
 class DebugWeaponHandler(webapp2.RequestHandler):
     def get(self):
-        weapon = npcs.weapon()
-        weapon.name = self.request.get('name')
-        weapon.power = int(self.request.get('power'))
-        weapon.weight = int(self.request.get('weight'))
+        weapon = npcs.weapon(
+            name = self.request.get('name'),
+            power = int(self.request.get('power')),
+            weight = int(self.request.get('weight')),
+        )
+        weapon.put()
         debug_template = jinja_env.get_template('templates/debug_weapon.html')
         html = debug_template.render(
 

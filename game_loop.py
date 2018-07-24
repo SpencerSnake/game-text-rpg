@@ -20,8 +20,8 @@ class Combat(object):
 
         if hit >= dodge:
             dmg = (((player1.strength + player1.weapon) /
-            (10 - (player1.dex / 3)))/
-            1 + (player2.armor / 100))
+                (10 - (player1.dex / 3)))/
+                1 + (player2.armor / 100))
         return int(dmg)
 
     def combat_loop(self):
