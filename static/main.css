@@ -8,9 +8,11 @@ h1 {
     right: 50%;
     left: 50%; */
   position: absolute;
-  left:50%;
-  top: 50%;
+  left:25%;
+  top: 25%;
   width: 100%;
+  right: 25%
+  bottom: 25%
   text-align: center;
   font-size: 40px;
 
@@ -35,9 +37,11 @@ h1 {
 body {
   margin: 0;
 }
-#act_sect {
-  left:50%;
-  top: 50%;
+/* #act_sect {
+  position: relative;
+
+  left:auto;
+  bottom: auto;
   text-align: center;
   font-size: 18px;
   background-color: lightgrey;
@@ -46,4 +50,31 @@ body {
   padding: 25px;
   margin: 25px;
 
+} */
+
+.item1 {
+  grid-column-start: 2;
+  grid-column-end: 2;}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 10px;
+  background-color: #2196F3;
+  padding: 10px;
+}
+.grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+
+
+}
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
 }
