@@ -53,3 +53,4 @@ class Combat(object):
                 print("Enemy is Dead")
             elif player.hp <= 0:
                 print("GAME OVER")
+#call to datastore
