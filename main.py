@@ -11,19 +11,7 @@ import webapp2
 jinja_env = jinja2.Environment(
     loader = jinja2.FileSystemLoader(os.path.dirname(__file__))
 )
-<<<<<<< HEAD
-player = npcs.player.query().filter(
-    npcs.player.name == "Test_Player"
-)
-player = player.get().key
-enemy = npcs.monster.query().filter(
-    npcs.monster.name == "Shadow_Link"
-)
-enemy = enemy.get().key
-combat = game_loop.Combat(player, enemy)
-=======
 
->>>>>>> 8944c59a1de29f494c5c70c47da97e8e093741b1
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         main_template = jinja_env.get_template('templates/main.html')
