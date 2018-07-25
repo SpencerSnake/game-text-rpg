@@ -3,7 +3,10 @@
 # npcs database. Storing player and enemies.
 
 from google.appengine.ext import ndb
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6d0633ffad299fea3e420abfa37169762d40dd4f
 
 import webapp2
 
