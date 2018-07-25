@@ -10,6 +10,7 @@ import random
 import webapp2
 jinja_env = jinja2.Environment(
     loader = jinja2.FileSystemLoader(os.path.dirname(__file__))
+<<<<<<< HEAD
 
 player = npcs.player.query().filter(
     npcs.player.name == "Test_Player"
@@ -20,6 +21,9 @@ enemy = npcs.monster.query().filter(
 
 enemy = enemy.get().key
 combat = game_loop.Combat(player, enemy)    
+=======
+)
+>>>>>>> 54c96e24a74f6556126daddf04c0a9520aa87c90
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
