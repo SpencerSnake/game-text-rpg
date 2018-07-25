@@ -136,17 +136,20 @@ class GameHandler(webapp2.RequestHandler):
 class GameLoadHandler(webapp2.RequestHandler):
     def get(self):
         game_template = jinja_env.get_template('templates/game.html')
-        player = npcs.player.query().filter(
-            npcs.player.name == "Test_Player"
-        )
-        player = player.get().key
+        try:
+            player = npcs.player.query().filter(
+                npcs.player.name == "Test_Player"
+            )
+            player = player.get().key
 
-        enemy = npcs.monster.query().filter(
-            npcs.monster.name == "Shadow_Link"
-        )
-        enemy = enemy.get().key
-        combat = game_loop.Combat(player, enemy)
-        result = combat.combat_loop()
+            enemy = npcs.monster.query().filter(
+                npcs.monster.name == "Shadow_Link"
+            )
+            enemy = enemy.get().key
+            combat = game_loop.Combat(player, enemy)
+            result = combat.combat_loop()
+        except(NoneTypeError):
+            result = "ERROR: Models missing from NDB"
         html = game_template.render({
             "result":result
         })
