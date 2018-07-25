@@ -5,7 +5,7 @@
 from google.appengine.ext import ndb
 
 import npcs
-#import game_loop
+import game_loop
 
 import os
 import jinja2
@@ -15,6 +15,18 @@ import webapp2
 jinja_env = jinja2.Environment(
     loader = jinja2.FileSystemLoader(os.path.dirname(__file__))
 )
+
+player = npcs.player.query().filter(
+    npcs.player.name == "Test_Player"
+)
+player = player.get().key
+
+enemy = npcs.monster.query().filter(
+    npcs.monster.name == "Shadow_Link"
+)
+enemy = enemy.get().key
+
+combat = game_loop.Combat(player, enemy)
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -48,7 +60,7 @@ class DebugMonsterHandler(webapp2.RequestHandler):
             weapon = temp_weapon.fetch(1)[0].key,
             armor = temp_armor.fetch(1)[0].key,
             speed = int((int(self.request.get('strength')*10)/
-                (temp_armor.fetch(1)[0].weight+temp_weapon.fetch(1)[0].weight)+
+                (temp_armor.get().weight+temp_weapon.get().weight)+
                 (int(self.request.get('dexterity'))*1.2)))
         )
         monster.put()
@@ -83,7 +95,7 @@ class DebugPlayerHandler(webapp2.RequestHandler):
             weapon = temp_weapon.fetch(1)[0].key,
             armor = temp_armor.fetch(1)[0].key,
             speed = int((int(self.request.get('strength')*10)/
-                (temp_armor.fetch(1)[0].weight+temp_weapon.fetch(1)[0].weight)+
+                (temp_armor.get().weight+temp_weapon.get().weight)+
                 (int(self.request.get('dexterity'))*1.2))),
             xp = int(self.request.get('xp')),
             gold = int(self.request.get('gold')),)
@@ -136,8 +148,10 @@ class GameHandler(webapp2.RequestHandler):
 class GameLoadHandler(webapp2.RequestHandler):
     def get(self):
         game_template = jinja_env.get_template('templates/game.html')
-        html = game_template.render(
-        )
+        result = combat.combat_loop()
+        html = game_template.render({
+            "result":result
+        })
         self.response.write(html)
 class GameStoryHandler(webapp2.RequestHandler):
     def get(self):

@@ -1,4 +1,6 @@
-application: redesigned-computing-machine
+application: redesigned-computing-machinee
+
+threadsafe: true
 
 #version: 1
 runtime: python27
@@ -15,6 +17,6 @@ handlers:
 
 libraries:
 - name: webapp2
-  version: "2.5.2"
+  version: latest
 - name: jinja2
-  version: "2.6"
+  version: latest
