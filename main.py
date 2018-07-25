@@ -31,10 +31,8 @@ class DebugHandler(webapp2.RequestHandler):
 
         )
         self.response.write(html)
-
 class DebugMonsterHandler(webapp2.RequestHandler):
     def get(self):
-
         temp_weapon = npcs.weapon.query().filter(
             npcs.weapon.name == "Test_Weapon")
 
@@ -54,8 +52,6 @@ class DebugMonsterHandler(webapp2.RequestHandler):
                 (int(self.request.get('dexterity'))*1.2)))
         )
         monster.put()
-<<<<<<< HEAD
-
         monster = npcs.Monster()
         monster.name = self.request.get('name')
         monster.hp = self.request.get('hp')
@@ -67,26 +63,16 @@ class DebugMonsterHandler(webapp2.RequestHandler):
             npcs.weapon.name == self.request.get('weapon'))
         monster.armor = npcs.armor.query().filer(
             npcs.armor.name == self.request.get('armor'))
-
-=======
->>>>>>> 75eb6339fc0731b3d941ebf74fa852cb9bcd4f83
         debug_template = jinja_env.get_template('templates/debug_monster.html')
         html = debug_template.render(
-
         )
         self.response.write(html)
-
 class DebugPlayerHandler(webapp2.RequestHandler):
     def get(self):
-
-<<<<<<< HEAD
-=======
         temp_weapon = npcs.weapon.query().filter(
             npcs.weapon.name == "Test_Weapon")
-
         temp_armor = npcs.armor.query().filter(
             npcs.armor.name == "Test_Armor")
->>>>>>> 75eb6339fc0731b3d941ebf74fa852cb9bcd4f83
         player = npcs.player(
             name = self.request.get('name'),
             hp = int(self.request.get('hp')),
@@ -100,11 +86,8 @@ class DebugPlayerHandler(webapp2.RequestHandler):
                 (temp_armor.fetch(1)[0].weight+temp_weapon.fetch(1)[0].weight)+
                 (int(self.request.get('dexterity'))*1.2))),
             xp = int(self.request.get('xp')),
-            gold = int(self.request.get('gold')),
-        )
+            gold = int(self.request.get('gold')),)
         player.put()
-<<<<<<< HEAD
-
         player = npcs.player()
         player.name = self.request.get('name')
         player.hp = int(self.request.get('hp'))
@@ -116,15 +99,10 @@ class DebugPlayerHandler(webapp2.RequestHandler):
             npcs.weapon.name == self.request.get('weapon'))
         player.armor = npcs.armor.query().filer(
             npcs.armor.name == self.request.get('armor'))
-
-=======
->>>>>>> 75eb6339fc0731b3d941ebf74fa852cb9bcd4f83
         debug_template = jinja_env.get_template('templates/debug_player.html')
         html = debug_template.render(
-
         )
         self.response.write(html)
-
 class DebugArmorHandler(webapp2.RequestHandler):
     def get(self):
         armor = npcs.armor(
@@ -135,10 +113,8 @@ class DebugArmorHandler(webapp2.RequestHandler):
         armor.put()
         debug_template = jinja_env.get_template('templates/debug_armor.html')
         html = debug_template.render(
-
         )
         self.response.write(html)
-
 class DebugWeaponHandler(webapp2.RequestHandler):
     def get(self):
         weapon = npcs.weapon(
@@ -149,42 +125,32 @@ class DebugWeaponHandler(webapp2.RequestHandler):
         weapon.put()
         debug_template = jinja_env.get_template('templates/debug_weapon.html')
         html = debug_template.render(
-
         )
         self.response.write(html)
-
 class GameHandler(webapp2.RequestHandler):
     def get(self):
         game_template = jinja_env.get_template('templates/game.html')
         html = game_template.render(
-
         )
         self.response.write(html)
-
 class GameLoadHandler(webapp2.RequestHandler):
     def get(self):
         game_template = jinja_env.get_template('templates/game.html')
         html = game_template.render(
-
         )
         self.response.write(html)
-
 class GameStoryHandler(webapp2.RequestHandler):
     def get(self):
         game_template = jinja_env.get_template('templates/game.html')
         html = game_template.render(
-
         )
         self.response.write(html)
-
 class GameArcadeHandler(webapp2.RequestHandler):
     def get(self):
         game_template = jinja_env.get_template('templates/game.html')
         html = game_template.render(
-
         )
         self.response.write(html)
-
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/debug', DebugHandler),
