@@ -148,7 +148,7 @@ class GameLoadHandler(webapp2.RequestHandler):
             enemy = enemy.get().key
             combat = game_loop.Combat(player, enemy)
             result = combat.combat_loop()
-        except(NoneTypeError):
+        except(TypeError):
             result = "ERROR: Models missing from NDB"
         html = game_template.render({
             "result":result
