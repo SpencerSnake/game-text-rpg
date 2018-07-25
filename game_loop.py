@@ -32,11 +32,20 @@ class Combat(object):
             if(self.player.speed > self.enemy.speed): #speed rating decides if either the player or enemy goees first
                 faster = self.player
                 slower = self.enemy
+            # In case of speed tie, first turn is chosen randomly each round.
+            elif(self.player.speed == self.enemy.speed):
+                choice = random.randint(0,1)
+                if(choice == 1):
+                    faster = self.player
+                    slower = self.enemy
+                else:
+                    faster = self.enemy
+                    slower = self.player
             else:
                 faster = self.enemy
                 slower = self.player
 
-            print (faster)
+            print (faster) ###DEBUG TOOL###
 
             if playerChoice == 'fight':
                 if faster == self.player:
@@ -52,8 +61,8 @@ class Combat(object):
                         dmg = damage(self.player, self.enemy)
                         self.enemy.hp -= dmg
 
-            print(self.player.hp)
-            print(self.enemy.hp)
+            print(self.player.hp) ###DEBUG TOOL###
+            print(self.enemy.hp) ###DEBUG TOOL###
         if self.enemy.hp <= 0:
             return("Enemy is Dead")
         elif self.player.hp <= 0:

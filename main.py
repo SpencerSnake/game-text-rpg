@@ -16,18 +16,6 @@ jinja_env = jinja2.Environment(
     loader = jinja2.FileSystemLoader(os.path.dirname(__file__))
 )
 
-player = npcs.player.query().filter(
-    npcs.player.name == "Test_Player"
-)
-player = player.get().key
-
-enemy = npcs.monster.query().filter(
-    npcs.monster.name == "Shadow_Link"
-)
-enemy = enemy.get().key
-
-combat = game_loop.Combat(player, enemy)
-
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         main_template = jinja_env.get_template('templates/main.html')
@@ -169,6 +157,16 @@ class GameHandler(webapp2.RequestHandler):
 class GameLoadHandler(webapp2.RequestHandler):
     def get(self):
         game_template = jinja_env.get_template('templates/game.html')
+        player = npcs.player.query().filter(
+            npcs.player.name == "Test_Player"
+        )
+        player = player.get().key
+
+        enemy = npcs.monster.query().filter(
+            npcs.monster.name == "Shadow_Link"
+        )
+        enemy = enemy.get().key
+        combat = game_loop.Combat(player, enemy)
         result = combat.combat_loop()
         html = game_template.render({
             "result":result
