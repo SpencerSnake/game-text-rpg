@@ -127,15 +127,12 @@ messages = ['','','','','']
 class GameLoadHandler(webapp2.RequestHandler):
     def get(self):
         game_template = jinja_env.get_template('templates/game.html')
+        running = True
         try:
-            player = npcs.player.query().filter(
-                npcs.player.name == "Macks"
-            )
+            player = npcs.player.query().filter()
             player = player.get().key
 
-            enemy = npcs.monster.query().filter(
-                npcs.monster.name == "Meepo"
-            )
+            enemy = npcs.monster.query().filter()
             enemy = enemy.get().key
 
             combat = game_loop.Combat(player, enemy)
@@ -145,8 +142,6 @@ class GameLoadHandler(webapp2.RequestHandler):
 
             print player.hp ###DEBUG TOOL###
             print enemy.hp ###DEBUG TOOL###
-
-            running = True
 
             if (player.hp > 0 and enemy.hp > 0):
                 try:
