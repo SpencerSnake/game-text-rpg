@@ -112,6 +112,8 @@ class DebugArmorHandler(webapp2.RequestHandler):
 
 class DebugWeaponHandler(webapp2.RequestHandler):
     def get(self):
+        print self.request
+        print self.request.get('name')
         weapon = npcs.weapon(
             name = self.request.get('name'),
             power = int(self.request.get('power')),
