@@ -61,15 +61,13 @@ class Combat(object):
                     dmg = damage(self.enemy, self.player)
                     self.player.hp -= dmg
                     if dmg != 0:
-<<<<<<< HEAD
                         player.was_hit = True
                         player.hurt = dmg
-                        self.messages.append("%s hit %s for %s damage" %*(enemy, player, dmg))
                         self.messages.append("%s hit %s for %s damage" %(enemy, player, dmg))
-=======
+                        self.messages.append("%s hit %s for %s damage" %(enemy, player, dmg))
+
                         self.player.was_hit = True
                         self.player.hurt = dmg
->>>>>>> 376402d1579f43aa3b2d24415764f7e748b53b04
                     else:
                         self.player.was_hit = False
                         self.player.hurt = dmg
@@ -77,23 +75,21 @@ class Combat(object):
                 dmg = damage(self.enemy, self.player)
                 self.player.hp -= dmg
                 if dmg != 0:
-<<<<<<< HEAD
                     player.was_hit = True
                     player.hurt = dmg
-                    self.messages.append("%s hit %s for %s damage" %*(enemy, player, dmg))
+                    self.messages.append("%s hit %s for %s damage" %(enemy, player, dmg))
                     self.messages.append("%s hit %s for %s damage" %(enemy, player, dmg))
                 else:
                     player.was_hit = False
                     player.playerhurt = dmg
                     self.messages.append("%s missed %s" %(enemy, player)
                     self.messages.append("%s missed %s" %(enemy, player))
-=======
+
                     self.player.was_hit = True
                     self.player.hurt = dmg
                 else:
                     self.player.was_hit = False
                     self.player.playerhurt = dmg
->>>>>>> 376402d1579f43aa3b2d24415764f7e748b53b04
                 if self.player.hp > 0:
                     dmg = damage(self.player, self.enemy)
                     self.enemy.hp -= dmg
