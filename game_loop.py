@@ -82,9 +82,7 @@ class Combat(object):
                 else:
                     player.was_hit = False
                     player.playerhurt = dmg
-                    self.messages.append("%s missed %s" %(enemy, player)
                     self.messages.append("%s missed %s" %(enemy, player))
-
                     self.player.was_hit = True
                     self.player.hurt = dmg
                 else:
