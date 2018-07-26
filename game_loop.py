@@ -91,4 +91,3 @@ class Combat(object):
         print(self.enemy.hp) ###DEBUG TOOL###
         self.player.put()
         self.enemy.put()
-#call to datastore

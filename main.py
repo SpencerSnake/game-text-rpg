@@ -146,6 +146,8 @@ class GameLoadHandler(webapp2.RequestHandler):
             print player.hp ###DEBUG TOOL###
             print enemy.hp ###DEBUG TOOL###
 
+            running = True
+
             if (player.hp > 0 and enemy.hp > 0):
                 try:
                     global messages
@@ -164,21 +166,48 @@ class GameLoadHandler(webapp2.RequestHandler):
                 except(ValueError):
                     placeholder = ("You encountered %s" % enemy.name)
                     messages.append(placeholder)
+            # Go to result when player wins or loses.
+            else:
+                game_template = jinja_env.get_template('templates/results.html')
+                if player.hp < 0:
+                    result = "You Lose!"
+                else:
+                    result = "You Win!"
+                running = False
+                player.hp = player.max_hp
+                enemy.hp = enemy.max_hp
+                player.was_hit = None
+                enemy.was_hit = None
+                player.put()
+                enemy.put()
+                html = game_template.render({
+                    'result':result
+                })
+                self.response.write(html)
+
+
         # Error handler in case database is missing entities.
         except(AttributeError):
             placeholder = 'ERROR: Models missing from NDB'
             messages.append(placeholder)
-        print messages
+        print messages ###DEBUG TOOL###
         messages = messages[-5:]
-        print messages
-        html = game_template.render({
-            'log1':messages[0],
-            'log2':messages[1],
-            'log3':messages[2],
-            'log4':messages[3],
-            'log5':messages[4],
-        })
-        self.response.write(html)
+        print messages ###DEBUG TOOL###
+        if running:
+            html = game_template.render({
+                'log1':messages[0],
+                'log2':messages[1],
+                'log3':messages[2],
+                'log4':messages[3],
+                'log5':messages[4],
+                'name':player.name,
+                'hp':player.hp,
+                'max_hp':player.max_hp,
+                'xp':player.xp,
+                'wp':player.weapon.get().name,
+                'gp':player.gold,
+            })
+            self.response.write(html)
 
 class GameStoryHandler(webapp2.RequestHandler):
     def get(self):
@@ -202,7 +231,7 @@ class MainGame(webapp2.RequestHandler):
 
 def calculate_speed(strength, armor, weapon, dexterity):
     print('Called with', strength, dexterity, armor, weapon)
-    return int(((strength * 10) / (armor.weight + weapon.weight)) + (dexterity * 1.2))
+    return int(((strength * 3) / (armor.weight + weapon.weight)) + (dexterity * 1.2))
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
