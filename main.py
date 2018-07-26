@@ -39,9 +39,12 @@ class DebugMonsterHandler(webapp2.RequestHandler):
             intel = int(self.request.get('intel')),
             weapon = temp_weapon.fetch(1)[0].key,
             armor = temp_armor.fetch(1)[0].key,
-            speed = int((int(self.request.get('strength')*10)/
-                (temp_armor.get().weight+temp_weapon.get().weight)+
-                (int(self.request.get('dexterity'))*1.2)))
+            speed=calculate_speed(
+                int(self.request.get('strength')),
+                temp_armor.get(),
+                temp_weapon.get(),
+                int(self.request.get('dexterity'))
+                ),
         )
         monster.put()
         debug_template = jinja_env.get_template('templates/debug_monster.html')
@@ -56,19 +59,23 @@ class DebugPlayerHandler(webapp2.RequestHandler):
         temp_armor = npcs.armor.query().filter(
             npcs.armor.name == self.request.get('armor'))
         player = npcs.player(
-            name = self.request.get('name'),
-            hp = int(self.request.get('hp')),
-            max_hp = int(self.request.get('max_hp')),
-            strength = int(self.request.get('strength')),
-            dexterity = int(self.request.get('dexterity')),
-            intel = int(self.request.get('intel')),
-            weapon = temp_weapon.fetch(1)[0].key,
-            armor = temp_armor.fetch(1)[0].key,
-            speed = int((int(self.request.get('strength')*10)/
-                (temp_armor.get().weight+temp_weapon.get().weight)+
-                (int(self.request.get('dexterity'))*1.2))),
-            xp = int(self.request.get('xp')),
-            gold = int(self.request.get('gold')),)
+            name=self.request.get('name'),
+            hp=int(self.request.get('hp')),
+            max_hp=int(self.request.get('max_hp')),
+            strength=int(self.request.get('strength')),
+            dexterity=int(self.request.get('dexterity')),
+            intel=int(self.request.get('intel')),
+            weapon=temp_weapon.fetch(1)[0].key,
+            armor=temp_armor.fetch(1)[0].key,
+            speed=calculate_speed(
+                int(self.request.get('strength')),
+                temp_armor.get(),
+                temp_weapon.get(),
+                int(self.request.get('dexterity'))
+                ),
+            xp=int(self.request.get('xp')),
+            gold=int(self.request.get('gold')),
+        )
         player.put()
         debug_template = jinja_env.get_template('templates/debug_player.html')
         html = debug_template.render(
@@ -122,12 +129,12 @@ class GameLoadHandler(webapp2.RequestHandler):
         game_template = jinja_env.get_template('templates/game.html')
         try:
             player = npcs.player.query().filter(
-                npcs.player.name == "Test_Player"
+                npcs.player.name == "Macks"
             )
             player = player.get().key
 
             enemy = npcs.monster.query().filter(
-                npcs.monster.name == "Shadow_Link"
+                npcs.monster.name == "Meepo"
             )
             enemy = enemy.get().key
 
@@ -192,6 +199,10 @@ class MainGame(webapp2.RequestHandler):
         game_template = jinja_env.get_template('templates/game.html')
         html = game_template.render()
         self.response.write(html)
+
+def calculate_speed(strength, armor, weapon, dexterity):
+    print('Called with', strength, dexterity, armor, weapon)
+    return int(((strength * 10) / (armor.weight + weapon.weight)) + (dexterity * 1.2))
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
