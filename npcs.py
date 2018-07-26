@@ -6,12 +6,6 @@ from google.appengine.ext import ndb
 
 import webapp2
 
-### TO DO ###
-# - integrate speed based on strength and weight -DONE-
-# - create debugger tool to add these items
-# - simplify damage into the npc class, instead of within damage
-#   step of game_loop
-
 # This is the base npc class containing all
 # the statistics required for combat. It's
 # used by both players and enemies.
@@ -34,6 +28,10 @@ class npc(ndb.Model):
     dexterity = ndb.IntegerProperty(required=True)
     # determines chance to hit
     intel = ndb.IntegerProperty(required=True)
+    # determines message in the combat log
+    was_hit = ndb.BooleanProperty(required=False)
+    # how much damage it took
+    hurt = ndb.IntegerProperty(required=False)
 
 
 

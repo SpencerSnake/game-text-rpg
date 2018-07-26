@@ -23,6 +23,7 @@ class DebugHandler(webapp2.RequestHandler):
         html = debug_template.render(
         )
         self.response.write(html)
+
 class DebugMonsterHandler(webapp2.RequestHandler):
     def get(self):
         temp_weapon = npcs.weapon.query().filter(
@@ -58,6 +59,7 @@ class DebugMonsterHandler(webapp2.RequestHandler):
         html = debug_template.render(
         )
         self.response.write(html)
+
 class DebugPlayerHandler(webapp2.RequestHandler):
     def get(self):
         temp_weapon = npcs.weapon.query().filter(
@@ -94,6 +96,7 @@ class DebugPlayerHandler(webapp2.RequestHandler):
         html = debug_template.render(
         )
         self.response.write(html)
+
 class DebugArmorHandler(webapp2.RequestHandler):
     def get(self):
         armor = npcs.armor(
@@ -106,6 +109,7 @@ class DebugArmorHandler(webapp2.RequestHandler):
         html = debug_template.render(
         )
         self.response.write(html)
+
 class DebugWeaponHandler(webapp2.RequestHandler):
     def get(self):
         weapon = npcs.weapon(
@@ -118,12 +122,21 @@ class DebugWeaponHandler(webapp2.RequestHandler):
         html = debug_template.render(
         )
         self.response.write(html)
+
 class GameHandler(webapp2.RequestHandler):
     def get(self):
         game_template = jinja_env.get_template('templates/game.html')
         html = game_template.render(
         )
         self.response.write(html)
+
+# This is the variable for the logs.
+# It defaults to 5 empty strings in case there are
+# less than 5 messages to display on the first round.
+# This is outside of the handler to make sure it persists
+# between rounds of combat.
+messages = ['','','','','']
+
 class GameLoadHandler(webapp2.RequestHandler):
     def get(self):
         game_template = jinja_env.get_template('templates/game.html')
@@ -137,32 +150,62 @@ class GameLoadHandler(webapp2.RequestHandler):
                 npcs.monster.name == "Shadow_Link"
             )
             enemy = enemy.get().key
+
             combat = game_loop.Combat(player, enemy)
-            result = combat.combat_loop()
+
+            enemy = enemy.get()
+            player = player.get()
+
+            if (player.hp > 0 and enemy.hp > 0):
+                try:
+                    playerChoice = self.request.get('action')
+                    combat.combat_loop(playerChoice)
+                    if player.was_hit:
+                        messages.append("%s hit %s for %s damage" %(enemy.name, player.name, player.hurt))
+                    else:
+                        messages.append("%s missed %s" %(enemy.name, player.name))
+                    if enemy.was_hit:
+                        messages.append("%s hit %s for %s damage" %(player.name, enemy.name, enemy.hurt))
+                    else:
+                        messages.append("%s missed %s" %(player.name, enemy.name))
+                    if enemy.hp <= enemy.max_hp/2:
+                        messages.append("%s is looking weak" %(enemy.name))
+                except(ValueError):
+                    placeholder = ("You encountered %s" % enemy.name)
+                    messages.append(placeholder)
+        # Error handler in case database is missing entities.
         except(AttributeError):
-            result = "ERROR: Models missing from NDB"
+            placeholder = 'ERROR: Models missing from NDB'
+            messages.append(placeholder)
+
+        messages = messages[:-5]
         html = game_template.render({
-            "result":result
+            'log1':messages[0],
+            'log2':messages[1],
+            'log3':messages[2],
+            'log4':messages[3],
+            'log5':messages[4],
         })
         self.response.write(html)
+
 class GameStoryHandler(webapp2.RequestHandler):
     def get(self):
         game_template = jinja_env.get_template('templates/game.html')
         html = game_template.render(
         )
         self.response.write(html)
+
 class GameArcadeHandler(webapp2.RequestHandler):
     def get(self):
         game_template = jinja_env.get_template('templates/game.html')
         html = game_template.render(
         )
         self.response.write(html)
+
 class MainGame(webapp2.RequestHandler):
-    pass
     def get(self):
         game_template = jinja_env.get_template('templates/game.html')
-        html = game_template.render(
-        )
+        html = game_template.render()
         self.response.write(html)
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
@@ -172,6 +215,7 @@ app = webapp2.WSGIApplication([
     ('/debug/armor', DebugArmorHandler),
     ('/debug/weapon', DebugWeaponHandler),
     ('/game', GameHandler),
+    ('/game/debug', GameDebugHandler),
     ('/game/load', GameLoadHandler),
     ('/game/story', GameStoryHandler),
     ('/game/arcade', GameArcadeHandler),
