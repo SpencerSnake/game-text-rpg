@@ -158,6 +158,9 @@ class GameLoadHandler(webapp2.RequestHandler):
             enemy = enemy.get()
             player = player.get()
 
+            print player.hp ###DEBUG TOOL###
+            print enemy.hp ###DEBUG TOOL###
+
             if (player.hp > 0 and enemy.hp > 0):
                 try:
                     global messages
@@ -220,11 +223,8 @@ app = webapp2.WSGIApplication([
     ('/debug/armor', DebugArmorHandler),
     ('/debug/weapon', DebugWeaponHandler),
     ('/game', GameHandler),
-#    ('/game/load', GameLoadHandler),
-    # ('/game/debug', GameDebugHandler),
-    ('/game/load', GameLoadHandler),
     ('/game/story', GameStoryHandler),
     ('/game/arcade', GameArcadeHandler),
     ("game.html", MainGame),
-    ("/maingame", MainGame),
+    ('/maingame', GameLoadHandler),
 ], debug=True)
