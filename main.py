@@ -158,6 +158,8 @@ class GameArcadeHandler(webapp2.RequestHandler):
         html = game_template.render(
         )
         self.response.write(html)
+class MainGame(webapp2.RequestHandler):
+    pass
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/debug', DebugHandler),
@@ -169,4 +171,5 @@ app = webapp2.WSGIApplication([
     ('/game/load', GameLoadHandler),
     ('/game/story', GameStoryHandler),
     ('/game/arcade', GameArcadeHandler),
+    ("game.html", MainGame),
 ], debug=True)
