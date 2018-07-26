@@ -158,7 +158,15 @@ class GameArcadeHandler(webapp2.RequestHandler):
         )
         self.response.write(html)
 class MainGame(webapp2.RequestHandler):
+<<<<<<< HEAD
     pass
+=======
+    def get(self):
+        game_template = jinja_env.get_template('templates/game.html')
+        html = game_template.render(
+        )
+        self.response.write(html)
+>>>>>>> 8c44a420c7f849000fe8ce47035710e5bb7e0398
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/debug', DebugHandler),
@@ -170,5 +178,9 @@ app = webapp2.WSGIApplication([
     ('/game/load', GameLoadHandler),
     ('/game/story', GameStoryHandler),
     ('/game/arcade', GameArcadeHandler),
+<<<<<<< HEAD
     ("game.html", MainGame),
+=======
+    ("/maingame", MainGame),
+>>>>>>> 8c44a420c7f849000fe8ce47035710e5bb7e0398
 ], debug=True)
