@@ -158,6 +158,7 @@ class GameLoadHandler(webapp2.RequestHandler):
 
             if (player.hp > 0 and enemy.hp > 0):
                 try:
+                    global messages
                     playerChoice = self.request.get('action')
                     combat.combat_loop(playerChoice)
                     if player.was_hit:
@@ -177,8 +178,9 @@ class GameLoadHandler(webapp2.RequestHandler):
         except(AttributeError):
             placeholder = 'ERROR: Models missing from NDB'
             messages.append(placeholder)
-
-        messages = messages[:-5]
+        print messages
+        messages = messages[-5:]
+        print messages
         html = game_template.render({
             'log1':messages[0],
             'log2':messages[1],
@@ -207,6 +209,13 @@ class MainGame(webapp2.RequestHandler):
         game_template = jinja_env.get_template('templates/game.html')
         html = game_template.render()
         self.response.write(html)
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+>>>>>>> 3dfd982e82c0ac46e87c53b6766d9fa5ef798885
+=======
+>>>>>>> ddf494584d821100ceaef01f521c78da6eb5bc86
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/debug', DebugHandler),
@@ -215,7 +224,6 @@ app = webapp2.WSGIApplication([
     ('/debug/armor', DebugArmorHandler),
     ('/debug/weapon', DebugWeaponHandler),
     ('/game', GameHandler),
-    ('/game/debug', GameDebugHandler),
     ('/game/load', GameLoadHandler),
     ('/game/story', GameStoryHandler),
     ('/game/arcade', GameArcadeHandler),
