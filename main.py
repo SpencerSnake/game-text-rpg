@@ -9,8 +9,7 @@ import jinja2
 import random
 import webapp2
 jinja_env = jinja2.Environment(
-    loader = jinja2.FileSystemLoader(os.path.dirname(__file__))
-)
+    loader = jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -171,5 +170,9 @@ app = webapp2.WSGIApplication([
     ('/game/load', GameLoadHandler),
     ('/game/story', GameStoryHandler),
     ('/game/arcade', GameArcadeHandler),
+<<<<<<< HEAD
     ("game.html", MainGame),
+=======
+
+>>>>>>> 2b4ab4a2c6882c0dc50950c552d91bbaf9210578
 ], debug=True)
