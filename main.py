@@ -219,5 +219,6 @@ app = webapp2.WSGIApplication([
     ('/game/load', GameLoadHandler),
     ('/game/story', GameStoryHandler),
     ('/game/arcade', GameArcadeHandler),
+    ("game.html", MainGame),
     ("/maingame", MainGame),
 ], debug=True)
