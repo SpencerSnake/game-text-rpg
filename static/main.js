@@ -1,8 +1,13 @@
-function myFunction() {
-    var myNode = document.getElementById("clear");
-    myNode.innerHTML = '';
-  }
-  function gridFunction() {
-    console.log("kill him")
 
+  function formsubmit() {
+    var myNode = document.getElementById("form");
+    myNode.submit()
   }
+  // function gridFunction() {
+  //   console.log("kill him")
+  //
+  // }
+function img() {
+  Math.floor(Math.random() * 10)
+
+}
