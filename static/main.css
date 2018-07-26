@@ -17,6 +17,7 @@ h1 {
   background-color: lightgrey;
 
   width: 300px;
+
   border: 25px solid darkgreen;
   padding: 25px; /*fix box*/
   margin: 100px;
@@ -65,12 +66,15 @@ body {
 .grid-container {
   display: grid;
   grid-template-columns: auto auto;
+  border-style: double;
+  border-width: 15px;
+  
   grid-gap: 10px;
   background-color: #2196F3;
   padding: 10px;
  }
 .grid-container > div {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(1, 19, 1, 0.8);
   text-align: center;
   padding: 20px 0;
   font-size: 40px;
