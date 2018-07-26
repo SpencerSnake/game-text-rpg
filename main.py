@@ -218,6 +218,7 @@ app = webapp2.WSGIApplication([
     ('/debug/armor', DebugArmorHandler),
     ('/debug/weapon', DebugWeaponHandler),
     ('/game', GameHandler),
+#    ('/game/load', GameLoadHandler),
     # ('/game/debug', GameDebugHandler),
     ('/game/load', GameLoadHandler),
     ('/game/story', GameStoryHandler),
