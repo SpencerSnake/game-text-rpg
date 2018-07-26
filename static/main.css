@@ -2,11 +2,7 @@ h1 {
   font-family: Gypsy Curse;
   position: relative;
   position: absolute;
-    /* left: 50%;
-    top: 50%;
-    width: 50%;
-    right: 50%;
-    left: 50%; */
+
   position: absolute;
   left:25%;
   top: 25%;
@@ -14,20 +10,28 @@ h1 {
   right: 25%;
   bottom: 25%;
   text-align: center;
-  font-size: 40px;
-
 
 
   text-align: center;
-  font-size: 18px;
+
   background-color: lightgrey;
+<<<<<<< HEAD
   width: 300px;
   border: 25px solid darkgreen;
   padding: 25px; /*fix box*/
-  margin: 25px;
+  margin: 100px;
   opacity: .5;
   /* cursor: pointer;
   display: inline-block; */
+=======
+   width: 300px;
+   border: 25px solid black;
+   padding: 100px;
+   margin: 50px;
+  opacity: .35;
+
+
+>>>>>>> 376402d1579f43aa3b2d24415764f7e748b53b04
 
 }
 .background_img {
@@ -78,7 +82,6 @@ body {
   background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid rgba(0, 0, 0, 0.8);
   padding: 20px;
-  font-size: 10px;
   font-size: 30px;
   text-align: center;
 }

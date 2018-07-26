@@ -27,9 +27,9 @@ class DebugHandler(webapp2.RequestHandler):
 class DebugMonsterHandler(webapp2.RequestHandler):
     def get(self):
         temp_weapon = npcs.weapon.query().filter(
-            npcs.weapon.name == "Test_Weapon")
+            npcs.weapon.name == self.request.get('weapon'))
         temp_armor = npcs.armor.query().filter(
-            npcs.armor.name == "Test_Armor")
+            npcs.armor.name == self.request.get('armor'))
         monster = npcs.monster(
             name = self.request.get('name'),
             hp = int(self.request.get('hp')),
@@ -44,17 +44,17 @@ class DebugMonsterHandler(webapp2.RequestHandler):
                 (int(self.request.get('dexterity'))*1.2)))
         )
         monster.put()
-        monster = npcs.Monster()
-        monster.name = self.request.get('name')
-        monster.hp = self.request.get('hp')
-        monster.max_hp = self.request.get('max_hp')
-        monster.strength = self.request.get('strength')
-        monster.dexterity = self.request.get('dexterity')
-        monster.intel = self.request.get('intel')
-        monster.weapon = npcs.weapon.query().filer(
-            npcs.weapon.name == self.request.get('weapon'))
-        monster.armor = npcs.armor.query().filer(
-            npcs.armor.name == self.request.get('armor'))
+        # monster = npcs.Monster()
+        # monster.name = self.request.get('name')
+        # monster.hp = self.request.get('hp')
+        # monster.max_hp = self.request.get('max_hp')
+        # monster.strength = self.request.get('strength')
+        # monster.dexterity = self.request.get('dexterity')
+        # monster.intel = self.request.get('intel')
+        # monster.weapon = npcs.weapon.query().filer(
+        #     npcs.weapon.name == self.request.get('weapon'))
+        # monster.armor = npcs.armor.query().filer(
+        #     npcs.armor.name == self.request.get('armor'))
         debug_template = jinja_env.get_template('templates/debug_monster.html')
         html = debug_template.render(
         )
@@ -63,9 +63,9 @@ class DebugMonsterHandler(webapp2.RequestHandler):
 class DebugPlayerHandler(webapp2.RequestHandler):
     def get(self):
         temp_weapon = npcs.weapon.query().filter(
-            npcs.weapon.name == "Test_Weapon")
+            npcs.weapon.name == self.request.get('weapon'))
         temp_armor = npcs.armor.query().filter(
-            npcs.armor.name == "Test_Armor")
+            npcs.armor.name == self.request.get('armor'))
         player = npcs.player(
             name = self.request.get('name'),
             hp = int(self.request.get('hp')),
@@ -81,17 +81,17 @@ class DebugPlayerHandler(webapp2.RequestHandler):
             xp = int(self.request.get('xp')),
             gold = int(self.request.get('gold')),)
         player.put()
-        player = npcs.player()
-        player.name = self.request.get('name')
-        player.hp = int(self.request.get('hp'))
-        player.max_hp = int(self.request.get('max_hp'))
-        player.strength = int(self.request.get('stength'))
-        player.dexterity = int(self.request.get('dexterity'))
-        player.intel = int(self.request.get('intel'))
-        player.weapon = npcs.weapon.query().filer(
-            npcs.weapon.name == self.request.get('weapon'))
-        player.armor = npcs.armor.query().filer(
-            npcs.armor.name == self.request.get('armor'))
+        # player = npcs.player()
+        # player.name = self.request.get('name')
+        # player.hp = int(self.request.get('hp'))
+        # player.max_hp = int(self.request.get('max_hp'))
+        # player.strength = int(self.request.get('stength'))
+        # player.dexterity = int(self.request.get('dexterity'))
+        # player.intel = int(self.request.get('intel'))
+        # player.weapon = npcs.weapon.query().filer(
+        #     npcs.weapon.name == self.request.get('weapon'))
+        # player.armor = npcs.armor.query().filer(
+        #     npcs.armor.name == self.request.get('armor'))
         debug_template = jinja_env.get_template('templates/debug_player.html')
         html = debug_template.render(
         )
@@ -158,6 +158,7 @@ class GameLoadHandler(webapp2.RequestHandler):
 
             if (player.hp > 0 and enemy.hp > 0):
                 try:
+                    global messages
                     playerChoice = self.request.get('action')
                     combat.combat_loop(playerChoice)
                     if player.was_hit:
@@ -177,8 +178,9 @@ class GameLoadHandler(webapp2.RequestHandler):
         except(AttributeError):
             placeholder = 'ERROR: Models missing from NDB'
             messages.append(placeholder)
-
-        messages = messages[:-5]
+        print messages
+        messages = messages[-5:]
+        print messages
         html = game_template.render({
             'log1':messages[0],
             'log2':messages[1],
@@ -207,6 +209,7 @@ class MainGame(webapp2.RequestHandler):
         game_template = jinja_env.get_template('templates/game.html')
         html = game_template.render()
         self.response.write(html)
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/debug', DebugHandler),
@@ -215,7 +218,8 @@ app = webapp2.WSGIApplication([
     ('/debug/armor', DebugArmorHandler),
     ('/debug/weapon', DebugWeaponHandler),
     ('/game', GameHandler),
-    ('/game/debug', GameDebugHandler),
+#    ('/game/load', GameLoadHandler),
+    # ('/game/debug', GameDebugHandler),
     ('/game/load', GameLoadHandler),
     ('/game/story', GameStoryHandler),
     ('/game/arcade', GameArcadeHandler),
