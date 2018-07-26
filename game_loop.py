@@ -61,10 +61,8 @@ class Combat(object):
                     dmg = damage(self.enemy, self.player)
                     self.player.hp -= dmg
                     if dmg != 0:
-                        player.was_hit = True
-                        player.hurt = dmg
-                        self.messages.append("%s hit %s for %s damage" %(enemy, player, dmg))
-                        self.messages.append("%s hit %s for %s damage" %(enemy, player, dmg))
+                        self.player.was_hit = True
+                        self.player.hurt = dmg
 
                         self.player.was_hit = True
                         self.player.hurt = dmg
@@ -75,14 +73,6 @@ class Combat(object):
                 dmg = damage(self.enemy, self.player)
                 self.player.hp -= dmg
                 if dmg != 0:
-                    player.was_hit = True
-                    player.hurt = dmg
-                    self.messages.append("%s hit %s for %s damage" %(enemy, player, dmg))
-                    self.messages.append("%s hit %s for %s damage" %(enemy, player, dmg))
-                else:
-                    player.was_hit = False
-                    player.playerhurt = dmg
-                    self.messages.append("%s missed %s" %(enemy, player))
                     self.player.was_hit = True
                     self.player.hurt = dmg
                 else:
