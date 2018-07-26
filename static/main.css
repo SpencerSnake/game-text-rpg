@@ -23,7 +23,7 @@ h1 {
   background-color: lightgrey;
   width: 300px;
   border: 25px solid darkgreen;
-  padding: 25px;
+  padding: 25px; /*fix box*/
   margin: 25px;
   opacity: .5;
   /* cursor: pointer;
