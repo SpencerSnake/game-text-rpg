@@ -1,6 +1,6 @@
 # July 23, 2018
 # redesigned-computing-machine
-# the basic game loop
+# the overly complicated game loop
 
 from google.appengine.ext import ndb
 
@@ -23,48 +23,77 @@ class Combat(object):
     def __init__(self, thing1, thing2):#it does matter but it doesn't
         self.player = thing1.get()               #it really does
         self.enemy = thing2.get()
+        self.messages = []
 
-    def combat_loop(self):
-        self.player.hp = self.player.max_hp
-        self.enemy.hp = self.enemy.max_hp
-        while(self.player.hp > 0 and self.enemy.hp > 0):
-            playerChoice = 'fight' #jinja.FileSystemLoader(/noWhereYet)
-            if(self.player.speed > self.enemy.speed): #speed rating decides if either the player or enemy goees first
+    def combat_loop(self, playerChoice):
+        # Speed rating decides if either the player or enemy goes first
+        if(self.player.speed > self.enemy.speed):
+            faster = self.player
+            slower = self.enemy
+
+        # In case of speed tie, first turn is chosen randomly each round.
+        elif(self.player.speed == self.enemy.speed):
+            choice = random.randint(0,1)
+            if(choice == 1):
                 faster = self.player
                 slower = self.enemy
-            # In case of speed tie, first turn is chosen randomly each round.
-            elif(self.player.speed == self.enemy.speed):
-                choice = random.randint(0,1)
-                if(choice == 1):
-                    faster = self.player
-                    slower = self.enemy
-                else:
-                    faster = self.enemy
-                    slower = self.player
             else:
                 faster = self.enemy
                 slower = self.player
 
-            print (faster) ###DEBUG TOOL###
+        else:
+            faster = self.enemy
+            slower = self.player
 
-            if playerChoice == 'fight':
-                if faster == self.player:
-                    dmg = damage(self.player, self.enemy)
-                    self.enemy.hp -= dmg
-                    if self.enemy.hp > 0:
-                        dmg = damage(self.enemy, self.player)
-                        self.player.hp -= dmg
+        print (faster.name) ###DEBUG TOOL###
+
+        if playerChoice == 'attack':
+            if faster == self.player:
+                dmg = damage(self.player, self.enemy)
+                self.enemy.hp -= dmg
+                if dmg != 0:
+                    enemy.was_hit = True
+                    enemy.hurt = dmg
+                    self.messages.append("%s hit %s for %s damage" %(player, enemy, dmg))
                 else:
+                    enemy.was_hit = False
+                    enemy.hurt = dmg
+                    self.messages.append("%s missed %s" %(player, enemy))
+                if self.enemy.hp > 0:
                     dmg = damage(self.enemy, self.player)
                     self.player.hp -= dmg
-                    if self.player.hp > 0:
-                        dmg = damage(self.player, self.enemy)
-                        self.enemy.hp -= dmg
-
-            print(self.player.hp) ###DEBUG TOOL###
-            print(self.enemy.hp) ###DEBUG TOOL###
-        if self.enemy.hp <= 0:
-            return("Enemy is Dead")
-        elif self.player.hp <= 0:
-            return("GAME OVER")
+                    if dmg != 0:
+                        player.was_hit = True
+                        player.hurt = dmg
+                        self.messages.append("%s hit %s for %s damage" %*(enemy, player, dmg))
+                    else:
+                        player.was_hit = False
+                        player.hurt = dmg
+                        self.messages.append("%s missed %s" %(enemy, player))
+            else:
+                dmg = damage(self.enemy, self.player)
+                self.player.hp -= dmg
+                if dmg != 0:
+                    player.was_hit = True
+                    player.hurt = dmg
+                    self.messages.append("%s hit %s for %s damage" %*(enemy, player, dmg))
+                else:
+                    player.was_hit = False
+                    player.playerhurt = dmg
+                    self.messages.append("%s missed %s" %(enemy, player)
+                if self.player.hp > 0:
+                    dmg = damage(self.player, self.enemy)
+                    self.enemy.hp -= dmg
+                    if dmg != 0:
+                        enemy.was_hit = True
+                        enemy.hurt = dmg
+                        self.messages.append("%s hit %s for %s damage" %(player, enemy, dmg))
+                    else:
+                        enemy.was_hit = False
+                        enemy.hurt = dmg
+                        self.messages.append("%s missed %s" %(player, enemy))
+        print(self.player.hp) ###DEBUG TOOL###
+        print(self.enemy.hp) ###DEBUG TOOL###
+        player.put()
+        enemy.put()
 #call to datastore
