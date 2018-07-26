@@ -209,13 +209,7 @@ class MainGame(webapp2.RequestHandler):
         game_template = jinja_env.get_template('templates/game.html')
         html = game_template.render()
         self.response.write(html)
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> 3dfd982e82c0ac46e87c53b6766d9fa5ef798885
-=======
->>>>>>> ddf494584d821100ceaef01f521c78da6eb5bc86
+        
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/debug', DebugHandler),
