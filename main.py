@@ -1,6 +1,7 @@
 # July 23, 2018
 # redesigned-computing-machine
 # An open source game engine for online rpgs using the appEngine platform.
+
 from google.appengine.ext import ndb
 import npcs
 import game_loop
@@ -12,12 +13,15 @@ jinja_env = jinja2.Environment(
     loader = jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
 class MainHandler(webapp2.RequestHandler):
+    # Loads the main page
     def get(self):
         main_template = jinja_env.get_template('templates/main.html')
         html = main_template.render(
         )
         self.response.write(html)
+
 class DebugHandler(webapp2.RequestHandler):
+    # Loads the debug menu, allowing you to create new objects for the database.
     def get(self):
         debug_template = jinja_env.get_template('templates/debug.html')
         html = debug_template.render(
@@ -25,20 +29,21 @@ class DebugHandler(webapp2.RequestHandler):
         self.response.write(html)
 
 class DebugMonsterHandler(webapp2.RequestHandler):
+    # Loads new monster entity into database.
     def get(self):
         temp_weapon = npcs.weapon.query().filter(
             npcs.weapon.name == self.request.get('weapon'))
         temp_armor = npcs.armor.query().filter(
             npcs.armor.name == self.request.get('armor'))
         monster = npcs.monster(
-            name = self.request.get('name'),
-            hp = int(self.request.get('hp')),
-            max_hp = int(self.request.get('max_hp')),
-            strength = int(self.request.get('strength')),
-            dexterity = int(self.request.get('dexterity')),
-            intel = int(self.request.get('intel')),
-            weapon = temp_weapon.fetch(1)[0].key,
-            armor = temp_armor.fetch(1)[0].key,
+            name=self.request.get('name'),
+            hp=int(self.request.get('hp')),
+            max_hp=int(self.request.get('max_hp')),
+            strength=int(self.request.get('strength')),
+            dexterity=int(self.request.get('dexterity')),
+            intel=int(self.request.get('intel')),
+            weapon=temp_weapon.fetch(1)[0].key,
+            armor=temp_armor.fetch(1)[0].key,
             speed=calculate_speed(
                 int(self.request.get('strength')),
                 temp_armor.get(),
@@ -53,6 +58,7 @@ class DebugMonsterHandler(webapp2.RequestHandler):
         self.response.write(html)
 
 class DebugPlayerHandler(webapp2.RequestHandler):
+    # # Loads new player entity into database.
     def get(self):
         temp_weapon = npcs.weapon.query().filter(
             npcs.weapon.name == self.request.get('weapon'))
@@ -83,11 +89,12 @@ class DebugPlayerHandler(webapp2.RequestHandler):
         self.response.write(html)
 
 class DebugArmorHandler(webapp2.RequestHandler):
+    # Loads new armor entity into database.
     def get(self):
         armor = npcs.armor(
-            name = self.request.get('name'),
-            resistance = int(self.request.get('resistance')),
-            weight = int(self.request.get('weight')),
+            name=self.request.get('name'),
+            resistance=int(self.request.get('resistance')),
+            weight=int(self.request.get('weight')),
         )
         armor.put()
         debug_template = jinja_env.get_template('templates/debug_armor.html')
@@ -96,13 +103,14 @@ class DebugArmorHandler(webapp2.RequestHandler):
         self.response.write(html)
 
 class DebugWeaponHandler(webapp2.RequestHandler):
+    # Loads new weapon entity into database.
     def get(self):
         print self.request
         print self.request.get('name')
         weapon = npcs.weapon(
-            name = self.request.get('name'),
-            power = int(self.request.get('power')),
-            weight = int(self.request.get('weight')),
+            name=self.request.get('name'),
+            power=int(self.request.get('power')),
+            weight=int(self.request.get('weight')),
         )
         weapon.put()
         debug_template = jinja_env.get_template('templates/debug_weapon.html')
@@ -127,15 +135,12 @@ messages = ['','','','','']
 class GameLoadHandler(webapp2.RequestHandler):
     def get(self):
         game_template = jinja_env.get_template('templates/game.html')
+        running = True
         try:
-            player = npcs.player.query().filter(
-                npcs.player.name == "Macks"
-            )
+            player = npcs.player.query().filter()
             player = player.get().key
 
-            enemy = npcs.monster.query().filter(
-                npcs.monster.name == "Meepo"
-            )
+            enemy = npcs.monster.query().filter()
             enemy = enemy.get().key
 
             combat = game_loop.Combat(player, enemy)
@@ -164,36 +169,74 @@ class GameLoadHandler(webapp2.RequestHandler):
                 except(ValueError):
                     placeholder = ("You encountered %s" % enemy.name)
                     messages.append(placeholder)
+            # Go to result when player wins or loses.
+            else:
+                # Loads different page in this case
+                game_template = jinja_env.get_template('templates/results.html')
+                # Checks whether player won or lost.
+                if player.hp < 0:
+                    result = "You Lose!"
+                else:
+                    result = "You Win!"
+                # Tells code not to run the other page template
+                running = False
+                # Resets the statistics of the player and opponent.
+                player.hp = player.max_hp
+                enemy.hp = enemy.max_hp
+                player.was_hit = None
+                enemy.was_hit = None
+                # Arbitrary numbers increase, prompting you to keep playing the game.
+                player.xp += 150
+                player.gold += 30
+                player.put()
+                enemy.put()
+                # Resets message log
+                messages = ['','','','','']
+                html = game_template.render({
+                    'result':result
+                })
+                self.response.write(html)
+
         # Error handler in case database is missing entities.
         except(AttributeError):
             placeholder = 'ERROR: Models missing from NDB'
             messages.append(placeholder)
-        print messages
-        messages = messages[-5:]
-        print messages
-        html = game_template.render({
-            'log1':messages[0],
-            'log2':messages[1],
-            'log3':messages[2],
-            'log4':messages[3],
-            'log5':messages[4],
-        })
-        self.response.write(html)
 
+        print messages ###DEBUG TOOL###
+        # Slices messages back down to the 5 most recent entries.
+        messages = messages[-5:]
+        print messages ###DEBUG TOOL###
+        if running:
+            html = game_template.render({
+                'log1':messages[0],
+                'log2':messages[1],
+                'log3':messages[2],
+                'log4':messages[3],
+                'log5':messages[4],
+                'name':player.name,
+                'hp':player.hp,
+                'max_hp':player.max_hp,
+                'xp':player.xp,
+                'wp':player.weapon.get().name,
+                'gp':player.gold,
+            })
+            self.response.write(html)
+
+# NOT CURRENTLY USED
 class GameStoryHandler(webapp2.RequestHandler):
     def get(self):
         game_template = jinja_env.get_template('templates/game.html')
         html = game_template.render(
         )
         self.response.write(html)
-
+# NOT CURRENTLY USED
 class GameArcadeHandler(webapp2.RequestHandler):
     def get(self):
         game_template = jinja_env.get_template('templates/game.html')
         html = game_template.render(
         )
         self.response.write(html)
-
+# NOT CURRENTLY USED
 class MainGame(webapp2.RequestHandler):
     def get(self):
         game_template = jinja_env.get_template('templates/game.html')
@@ -201,8 +244,9 @@ class MainGame(webapp2.RequestHandler):
         self.response.write(html)
 
 def calculate_speed(strength, armor, weapon, dexterity):
-    print('Called with', strength, dexterity, armor, weapon)
-    return int(((strength * 10) / (armor.weight + weapon.weight)) + (dexterity * 1.2))
+    print('Called with', strength, dexterity, armor, weapon) ### DEBUG TOOL ###
+    # Calculates speed based on several parameters.
+    return int(((strength * 3) / (armor.weight + weapon.weight)) + (dexterity * 1.2))
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
@@ -214,6 +258,5 @@ app = webapp2.WSGIApplication([
     ('/game', GameHandler),
     ('/game/story', GameStoryHandler),
     ('/game/arcade', GameArcadeHandler),
-    ("game.html", MainGame),
     ('/maingame', GameLoadHandler),
 ], debug=True)
