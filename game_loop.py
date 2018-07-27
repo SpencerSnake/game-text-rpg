@@ -102,6 +102,6 @@ class Combat(object):
 
         print(self.player.hp) ###DEBUG TOOL###
         print(self.enemy.hp) ###DEBUG TOOL###
-        
+
         self.player.put()
         self.enemy.put()
