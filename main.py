@@ -173,8 +173,11 @@ class GameLoadHandler(webapp2.RequestHandler):
                 enemy.hp = enemy.max_hp
                 player.was_hit = None
                 enemy.was_hit = None
+                player.xp += 150
+                player.gold += 30
                 player.put()
                 enemy.put()
+                messages = ['','','','','']
                 html = game_template.render({
                     'result':result
                 })
